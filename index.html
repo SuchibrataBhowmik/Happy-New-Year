@@ -23,10 +23,19 @@
       color:white;
     }
 
+    /* scrollable card container */
     .container{
       text-align:center;
-      max-width:800px;
-      padding:20px;
+      max-width:850px;
+      max-height:95vh;
+      padding:22px;
+      overflow-y:auto;
+      scrollbar-width:none;          /* Firefox */
+    }
+
+    /* hide scrollbar Chrome/Edge/Safari */
+    .container::-webkit-scrollbar{
+      display:none;
     }
 
     h1{
@@ -106,13 +115,13 @@
   <div class="love-typing" id="loveBox"></div>
 </div>
 
-<!-- music -->
+<!-- 🎵 WORKING music link -->
 <audio
   id="bgm"
   loop
   preload="auto"
   playsinline
-  src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7b4c4939a8.mp3?filename=romantic-music-112199.mp3">
+  src="https://cdn.pixabay.com/audio/2023/03/30/audio_3b0de2ac3f.mp3">
 </audio>
 
 <script>
@@ -153,9 +162,7 @@ function playMusic(){
   const audio = document.getElementById("bgm");
   audio.volume = 0.8;
 
-  // browsers require gesture – this works on click
   audio.play().catch(()=>{
-    // show small helper button if blocked
     const fix = document.createElement("button");
     fix.className="btn";
     fix.innerHTML="Tap to enable music 🎵";
