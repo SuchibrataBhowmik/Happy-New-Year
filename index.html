@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Happy New Year My Love ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: radial-gradient(#000428, #004e92);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 700px;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+      animation: glow 2.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px #fff, 0 0 20px #ff005b;
+      }
+      to {
+        text-shadow: 0 0 20px #fff, 0 0 35px #ff005b;
+      }
+    }
+
+    .message {
+      font-size: 1.2rem;
+      margin-top: 10px;
+      min-height: 120px;
+    }
+
+    .heart {
+      position: fixed;
+      color: #ff5d8f;
+      animation: floatUp 5s linear forwards;
+      opacity: 0.8;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-120vh) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    .btn {
+      margin-top: 18px;
+      padding: 10px 18px;
+      border-radius: 25px;
+      border: none;
+      background: #ff2d55;
+      color: white;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="fireworks"></canvas>
+
+  <div class="container">
+    <h1>🎆 Happy New Year, My Love ❤️</h1>
+
+    <div class="message" id="msg"></div>
+
+    <button class="btn" onclick="startShow()">Click here 💗</button>
+  </div>
+
+  <audio id="bgm" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7b4c4939a8.mp3?filename=romantic-music-112199.mp3"></audio>
+
+  <script>
+    const text =
+      "My dearest love,\n\n" +
+      "Thank you for being the most beautiful part of my life.\n" +
+      "Every smile of yours makes my world brighter.\n" +
+      "In this New Year, I just wish for more laughter, more hugs,\n" +
+      "and more moments with you.\n\n" +
+      "I love you today, tomorrow, and always. 💖\n\n" +
+      "🎉 Happy New Year, my sweetheart!";
+
+    const msg = document.getElementById("msg");
+
+    let i = 0;
+
+    function typeWriter() {
+      if (i < text.length) {
+        msg.innerHTML += text.charAt(i) === "\n" ? "<br>" : text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 45);
+      }
+    }
+
+    function startShow() {
+      typeWriter();
+      makeHearts();
+      document.getElementById("bgm").play().catch(() => {});
+    }
+
+    function makeHearts() {
+      setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.fontSize = 20 + Math.random() * 40 + "px";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 5000);
+      }, 400);
+    }
+
+    // Fireworks
+    const canvas = document.getElementById("fireworks");
+    const ctx = canvas.getContext("2d");
+    resize();
+    window.addEventListener("resize", resize);
+
+    function resize() {
+      canvas.width = innerWidth;
+      canvas.height = innerHeight;
+    }
+
+    const fireworks = [];
+
+    function createFirework() {
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height / 2;
+      for (let i = 0; i < 50; i++) {
+        fireworks.push({
+          x,
+          y,
+          angle: Math.random() * 2 * Math.PI,
+          speed: Math.random() * 4 + 1,
+          life: 100
+        });
+      }
+    }
+
+    function updateFireworks() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      fireworks.forEach((f, idx) => {
+        const vx = Math.cos(f.angle) * f.speed;
+        const vy = Math.sin(f.angle) * f.speed;
+        f.x += vx;
+        f.y += vy;
+        f.life--;
+        ctx.globalAlpha = f.life / 100;
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, 2, 0, 2 * Math.PI);
+        ctx.fillStyle = "white";
+        ctx.fill();
+        if (f.life <= 0) fireworks.splice(idx, 1);
+      });
+      if (Math.random() < 0.1) createFirework();
+      requestAnimationFrame(updateFireworks);
+    }
+
+    updateFireworks();
+  </script>
+
+</body>
+</html>
