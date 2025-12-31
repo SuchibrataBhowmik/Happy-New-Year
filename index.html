@@ -23,17 +23,15 @@
       color:white;
     }
 
-    /* scrollable card container */
     .container{
       text-align:center;
       max-width:850px;
       max-height:95vh;
       padding:22px;
       overflow-y:auto;
-      scrollbar-width:none;          /* Firefox */
+      scrollbar-width:none;
     }
 
-    /* hide scrollbar Chrome/Edge/Safari */
     .container::-webkit-scrollbar{
       display:none;
     }
@@ -101,7 +99,7 @@
 
 <canvas id="fireworks"></canvas>
 
-<div class="container">
+<div class="container" id="container">
   <h1>🎆 Happy New Year, My Love ❤️</h1>
 
   <div class="message" id="msg"></div>
@@ -115,13 +113,13 @@
   <div class="love-typing" id="loveBox"></div>
 </div>
 
-<!-- 🎵 WORKING music link -->
+<!-- 🎵 working romantic music -->
 <audio
   id="bgm"
   loop
   preload="auto"
   playsinline
-  src="https://cdn.pixabay.com/audio/2023/03/30/audio_3b0de2ac3f.mp3">
+  src="https://cdn.pixabay.com/audio/2024/01/13/audio_6b2c41b22c.mp3">
 </audio>
 
 <script>
@@ -136,13 +134,22 @@ const text =
 " You are my today, my tomorrow and my forever. 💖\n\n" +
 " 🎉 Happy New Year, my sweetheart!";
 
-const msg = document.getElementById("msg");
-let i = 0;
+const msg=document.getElementById("msg");
+const container=document.getElementById("container");
+
+let i=0;
 
 function typeWriter(){
   if(i < text.length){
     msg.innerHTML += (text.charAt(i)==="\n") ? "<br>" : text.charAt(i);
     i++;
+
+    // auto-scroll smoothly
+    container.scrollTo({
+      top: container.scrollHeight,
+      behavior: "smooth"
+    });
+
     setTimeout(typeWriter,45);
   } else {
     document.getElementById("btn2").style.display="inline-block";
@@ -156,19 +163,12 @@ function startMessage(){
   document.getElementById("btn1").style.display="none";
 }
 
-/* ---------------- MUSIC FIX ---------------- */
+/* ---------------- MUSIC on first click ---------------- */
 
 function playMusic(){
-  const audio = document.getElementById("bgm");
-  audio.volume = 0.8;
-
-  audio.play().catch(()=>{
-    const fix = document.createElement("button");
-    fix.className="btn";
-    fix.innerHTML="Tap to enable music 🎵";
-    fix.onclick=()=>{ audio.play(); fix.remove(); };
-    document.body.appendChild(fix);
-  });
+  const audio=document.getElementById("bgm");
+  audio.volume=.8;
+  audio.play(); // no extra enable button anymore
 }
 
 /* ---------------- HEARTS ---------------- */
@@ -187,8 +187,8 @@ function makeHearts(){
 
 /* ---------------- 108 LOVE TYPING ---------------- */
 
-let loveText = "";
-for(let n=1; n<=108; n++){
+let loveText="";
+for(let n=1;n<=108;n++){
   loveText += `${n}. I Love You Sonu 💖\n`;
 }
 
@@ -197,6 +197,13 @@ function loveTypeWriter(){
   const loveBox=document.getElementById("loveBox");
   if(j < loveText.length){
     loveBox.innerHTML += (loveText.charAt(j)==="\n") ? "<br>" : loveText.charAt(j);
+
+    // auto-scroll continues
+    container.scrollTo({
+      top: container.scrollHeight,
+      behavior:"smooth"
+    });
+
     j++;
     setTimeout(loveTypeWriter,25);
   }
@@ -207,7 +214,7 @@ function startLoveTyping(){
   document.getElementById("btn2").style.display="none";
 }
 
-/* ---------------- COLORFUL FIREWORKS ---------------- */
+/* ---------------- FIREWORKS ---------------- */
 
 const canvas=document.getElementById("fireworks");
 const ctx=canvas.getContext("2d");
