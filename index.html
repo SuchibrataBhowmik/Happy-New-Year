@@ -46,12 +46,11 @@
       margin-top:8px;
     }
 
-    .love-text{
-      margin-top:15px;
-      line-height:1.6;
+    .love-typing{
+      margin-top:18px;
       font-size:1.2rem;
-      max-height:250px;
-      overflow-y:auto;
+      min-height:140px;
+      line-height:1.6;
     }
 
     .heart{
@@ -68,7 +67,7 @@
 
     .btn{
       margin-top:15px;
-      padding:10px 20px;
+      padding:10px 22px;
       border-radius:25px;
       border:none;
       background:#ff2d55;
@@ -100,17 +99,24 @@
 
   <button class="btn" id="btn1" onclick="startMessage()">Click here 💗</button>
 
-  <button class="btn" id="btn2" onclick="showLove()" style="display:none;">
+  <button class="btn" id="btn2" onclick="startLoveTyping()" style="display:none;">
     Click to see something special 💞
   </button>
 
-  <div class="love-text" id="loveBox"></div>
+  <div class="love-typing" id="loveBox"></div>
 </div>
 
-<audio id="bgm" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7b4c4939a8.mp3?filename=romantic-music-112199.mp3"></audio>
+<!-- music -->
+<audio
+  id="bgm"
+  loop
+  preload="auto"
+  playsinline
+  src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7b4c4939a8.mp3?filename=romantic-music-112199.mp3">
+</audio>
 
 <script>
-/* ---------------- ROMANTIC MESSAGE ---------------- */
+/* ---------------- MAIN MESSAGE ---------------- */
 
 const text =
 " My dearest love,\n\n" +
@@ -137,11 +143,28 @@ function typeWriter(){
 function startMessage(){
   typeWriter();
   makeHearts();
-  document.getElementById("bgm").play().catch(()=>{});
+  playMusic();
   document.getElementById("btn1").style.display="none";
 }
 
-/* ---------------- HEART FLOATS ---------------- */
+/* ---------------- MUSIC FIX ---------------- */
+
+function playMusic(){
+  const audio = document.getElementById("bgm");
+  audio.volume = 0.8;
+
+  // browsers require gesture – this works on click
+  audio.play().catch(()=>{
+    // show small helper button if blocked
+    const fix = document.createElement("button");
+    fix.className="btn";
+    fix.innerHTML="Tap to enable music 🎵";
+    fix.onclick=()=>{ audio.play(); fix.remove(); };
+    document.body.appendChild(fix);
+  });
+}
+
+/* ---------------- HEARTS ---------------- */
 
 function makeHearts(){
   setInterval(()=>{
@@ -155,26 +178,26 @@ function makeHearts(){
   },400);
 }
 
-/* ---------------- 108 LOVE LINES ---------------- */
+/* ---------------- 108 LOVE TYPING ---------------- */
 
-function showLove(){
-  const box=document.getElementById("loveBox");
-  box.innerHTML="";
+let loveText = "";
+for(let n=1; n<=108; n++){
+  loveText += `${n}. I Love You Sonu 💖\n`;
+}
 
-  let count=0;
+let j=0;
+function loveTypeWriter(){
+  const loveBox=document.getElementById("loveBox");
+  if(j < loveText.length){
+    loveBox.innerHTML += (loveText.charAt(j)==="\n") ? "<br>" : loveText.charAt(j);
+    j++;
+    setTimeout(loveTypeWriter,25);
+  }
+}
 
-  const interval=setInterval(()=>{
-    count++;
-    const line=document.createElement("div");
-    line.innerHTML=`💖 ${count}. I Love You Sonu`;
-    box.appendChild(line);
-
-    box.scrollTop=box.scrollHeight;
-
-    if(count===108){
-      clearInterval(interval);
-    }
-  },50);
+function startLoveTyping(){
+  loveTypeWriter();
+  document.getElementById("btn2").style.display="none";
 }
 
 /* ---------------- COLORFUL FIREWORKS ---------------- */
@@ -192,7 +215,7 @@ addEventListener("resize",resize);
 const fireworks=[];
 
 function randomColor(){
-  const colors=["#ff004f","#ffdd00","#4dff00","#00e5ff","#ff7af6","#ffa500"];
+  const colors=["#ff004f","#ffdd00","#4dff00","#00e5ff","#ff7af6","#ffa500","#00ffbf"];
   return colors[Math.floor(Math.random()*colors.length)];
 }
 
@@ -228,8 +251,7 @@ function updateFireworks(){
     if(f.life<=0) fireworks.splice(idx,1);
   });
 
-  if(Math.random()<0.15) createFirework();
-
+  if(Math.random()<0.18) createFirework();
   requestAnimationFrame(updateFireworks);
 }
 updateFireworks();
