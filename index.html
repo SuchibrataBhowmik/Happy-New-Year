@@ -97,179 +97,179 @@
 </head>
 <body>
 
-<canvas id="fireworks"></canvas>
+  <canvas id="fireworks"></canvas>
 
-<div class="container" id="container">
-  <h1>🎆 Happy New Year, My Love ❤️</h1>
+  <div class="container" id="container">
+    <h1>🎆 Happy New Year, My Love ❤️</h1>
 
-  <div class="message" id="msg"></div>
+    <div class="message" id="msg"></div>
 
-  <button class="btn" id="btn1" onclick="startMessage()">Click here 💗</button>
+    <button class="btn" id="btn1" onclick="startMessage()">Click here 💗</button>
 
-  <button class="btn" id="btn2" onclick="startLoveTyping()" style="display:none;">
-    Click to see something special 💞
-  </button>
+    <button class="btn" id="btn2" onclick="startLoveTyping()" style="display:none;">
+      Click to see something special 💞
+    </button>
 
-  <div class="love-typing" id="loveBox"></div>
-</div>
+    <div class="love-typing" id="loveBox"></div>
+  </div>
 
-<!-- 🎵 working romantic music -->
-<audio
-  id="bgm"
-  loop
-  preload="auto"
-  playsinline
-  src="https://cdn.pixabay.com/audio/2024/01/13/audio_6b2c41b22c.mp3">
-</audio>
+  <!-- 🎵 working romantic music -->
+  <audio
+    id="bgm"
+    loop
+    preload="auto"
+    playsinline
+    src="https://cdn.pixabay.com/audio/2024/01/13/audio_6b2c41b22c.mp3">
+  </audio>
 
-<script>
-/* ---------------- MAIN MESSAGE ---------------- */
+  <script>
+  /* ---------------- MAIN MESSAGE ---------------- */
 
-const text =
-" My dearest love,\n\n" +
-" Thank you for being the most beautiful part of my life.\n" +
-" Your smile, your voice, your presence — everything feels like magic.\n" +
-" In this New Year, I only wish to hold your hands more tightly,\n" +
-" laugh a little louder with you, and love you even deeper.\n\n" +
-" You are my today, my tomorrow and my forever. 💖\n\n" +
-" 🎉 Happy New Year, my sweetheart!";
+  const text =
+  " My dearest love,\n\n" +
+  " Thank you for being the most beautiful part of my life.\n" +
+  " Your smile, your voice, your presence — everything feels like magic.\n" +
+  " In this New Year, I only wish to hold your hands more tightly,\n" +
+  " laugh a little louder with you, and love you even deeper.\n\n" +
+  " You are my today, my tomorrow and my forever. 💖\n\n" +
+  " 🎉 Happy New Year, my sweetheart!";
 
-const msg=document.getElementById("msg");
-const container=document.getElementById("container");
+  const msg=document.getElementById("msg");
+  const container=document.getElementById("container");
 
-let i=0;
+  let i=0;
 
-function typeWriter(){
-  if(i < text.length){
-    msg.innerHTML += (text.charAt(i)==="\n") ? "<br>" : text.charAt(i);
-    i++;
+  function typeWriter(){
+    if(i < text.length){
+      msg.innerHTML += (text.charAt(i)==="\n") ? "<br>" : text.charAt(i);
+      i++;
 
-    // auto-scroll smoothly
-    container.scrollTo({
-      top: container.scrollHeight,
-      behavior: "smooth"
+      // auto-scroll smoothly
+      container.scrollTo({
+        top: container.scrollHeight,
+        behavior: "smooth"
+      });
+
+      setTimeout(typeWriter,45);
+    } else {
+      document.getElementById("btn2").style.display="inline-block";
+    }
+  }
+
+  function startMessage(){
+    typeWriter();
+    makeHearts();
+    playMusic();
+    document.getElementById("btn1").style.display="none";
+  }
+
+  /* ---------------- MUSIC on first click ---------------- */
+
+  function playMusic(){
+    const audio=document.getElementById("bgm");
+    audio.volume=.8;
+    audio.play(); // no extra enable button anymore
+  }
+
+  /* ---------------- HEARTS ---------------- */
+
+  function makeHearts(){
+    setInterval(()=>{
+      const heart=document.createElement("div");
+      heart.className="heart";
+      heart.innerHTML="❤️";
+      heart.style.left=Math.random()*window.innerWidth+"px";
+      heart.style.fontSize=20+Math.random()*40+"px";
+      document.body.appendChild(heart);
+      setTimeout(()=>heart.remove(),5000);
+    },400);
+  }
+
+  /* ---------------- 108 LOVE TYPING ---------------- */
+
+  let loveText="";
+  for(let n=1;n<=108;n++){
+    loveText += `${n}. I Love You Sonu 💖\n`;
+  }
+
+  let j=0;
+  function loveTypeWriter(){
+    const loveBox=document.getElementById("loveBox");
+    if(j < loveText.length){
+      loveBox.innerHTML += (loveText.charAt(j)==="\n") ? "<br>" : loveText.charAt(j);
+
+      // auto-scroll continues
+      container.scrollTo({
+        top: container.scrollHeight,
+        behavior:"smooth"
+      });
+
+      j++;
+      setTimeout(loveTypeWriter,25);
+    }
+  }
+
+  function startLoveTyping(){
+    loveTypeWriter();
+    document.getElementById("btn2").style.display="none";
+  }
+
+  /* ---------------- FIREWORKS ---------------- */
+
+  const canvas=document.getElementById("fireworks");
+  const ctx=canvas.getContext("2d");
+
+  function resize(){
+    canvas.width=innerWidth;
+    canvas.height=innerHeight;
+  }
+  resize();
+  addEventListener("resize",resize);
+
+  const fireworks=[];
+
+  function randomColor(){
+    const colors=["#ff004f","#ffdd00","#4dff00","#00e5ff","#ff7af6","#ffa500","#00ffbf"];
+    return colors[Math.floor(Math.random()*colors.length)];
+  }
+
+  function createFirework(){
+    const x=Math.random()*canvas.width;
+    const y=Math.random()*canvas.height/2;
+    const color=randomColor();
+    for(let i=0;i<60;i++){
+      fireworks.push({
+        x,y,
+        angle:Math.random()*Math.PI*2,
+        speed:Math.random()*4+1,
+        life:100,
+        color
+      });
+    }
+  }
+
+  function updateFireworks(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    fireworks.forEach((f,idx)=>{
+      f.x+=Math.cos(f.angle)*f.speed;
+      f.y+=Math.sin(f.angle)*f.speed;
+      f.life--;
+
+      ctx.globalAlpha=f.life/100;
+      ctx.beginPath();
+      ctx.arc(f.x,f.y,2,0,2*Math.PI);
+      ctx.fillStyle=f.color;
+      ctx.fill();
+
+      if(f.life<=0) fireworks.splice(idx,1);
     });
 
-    setTimeout(typeWriter,45);
-  } else {
-    document.getElementById("btn2").style.display="inline-block";
+    if(Math.random()<0.18) createFirework();
+    requestAnimationFrame(updateFireworks);
   }
-}
-
-function startMessage(){
-  typeWriter();
-  makeHearts();
-  playMusic();
-  document.getElementById("btn1").style.display="none";
-}
-
-/* ---------------- MUSIC on first click ---------------- */
-
-function playMusic(){
-  const audio=document.getElementById("bgm");
-  audio.volume=.8;
-  audio.play(); // no extra enable button anymore
-}
-
-/* ---------------- HEARTS ---------------- */
-
-function makeHearts(){
-  setInterval(()=>{
-    const heart=document.createElement("div");
-    heart.className="heart";
-    heart.innerHTML="❤️";
-    heart.style.left=Math.random()*window.innerWidth+"px";
-    heart.style.fontSize=20+Math.random()*40+"px";
-    document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),5000);
-  },400);
-}
-
-/* ---------------- 108 LOVE TYPING ---------------- */
-
-let loveText="";
-for(let n=1;n<=108;n++){
-  loveText += `${n}. I Love You Sonu 💖\n`;
-}
-
-let j=0;
-function loveTypeWriter(){
-  const loveBox=document.getElementById("loveBox");
-  if(j < loveText.length){
-    loveBox.innerHTML += (loveText.charAt(j)==="\n") ? "<br>" : loveText.charAt(j);
-
-    // auto-scroll continues
-    container.scrollTo({
-      top: container.scrollHeight,
-      behavior:"smooth"
-    });
-
-    j++;
-    setTimeout(loveTypeWriter,25);
-  }
-}
-
-function startLoveTyping(){
-  loveTypeWriter();
-  document.getElementById("btn2").style.display="none";
-}
-
-/* ---------------- FIREWORKS ---------------- */
-
-const canvas=document.getElementById("fireworks");
-const ctx=canvas.getContext("2d");
-
-function resize(){
-  canvas.width=innerWidth;
-  canvas.height=innerHeight;
-}
-resize();
-addEventListener("resize",resize);
-
-const fireworks=[];
-
-function randomColor(){
-  const colors=["#ff004f","#ffdd00","#4dff00","#00e5ff","#ff7af6","#ffa500","#00ffbf"];
-  return colors[Math.floor(Math.random()*colors.length)];
-}
-
-function createFirework(){
-  const x=Math.random()*canvas.width;
-  const y=Math.random()*canvas.height/2;
-  const color=randomColor();
-  for(let i=0;i<60;i++){
-    fireworks.push({
-      x,y,
-      angle:Math.random()*Math.PI*2,
-      speed:Math.random()*4+1,
-      life:100,
-      color
-    });
-  }
-}
-
-function updateFireworks(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-
-  fireworks.forEach((f,idx)=>{
-    f.x+=Math.cos(f.angle)*f.speed;
-    f.y+=Math.sin(f.angle)*f.speed;
-    f.life--;
-
-    ctx.globalAlpha=f.life/100;
-    ctx.beginPath();
-    ctx.arc(f.x,f.y,2,0,2*Math.PI);
-    ctx.fillStyle=f.color;
-    ctx.fill();
-
-    if(f.life<=0) fireworks.splice(idx,1);
-  });
-
-  if(Math.random()<0.18) createFirework();
-  requestAnimationFrame(updateFireworks);
-}
-updateFireworks();
-</script>
+  updateFireworks();
+  </script>
 
 </body>
 </html>
