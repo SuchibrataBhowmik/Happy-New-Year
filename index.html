@@ -1,275 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Happy New Year My Love ❤️</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<title>Happy Anniversary 💍</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:"Poppins",sans-serif;
-    }
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Poppins,sans-serif;
+}
 
-    body{
-      background:radial-gradient(#000428,#004e92);
-      height:100vh;
-      overflow:hidden;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:white;
-    }
+body{
+  background:radial-gradient(circle at top,#5a1a48,#3a0a2e,#160014);
+  height:100vh;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+}
 
-    .container{
-      text-align:center;
-      max-width:850px;
-      max-height:95vh;
-      padding:22px;
-      overflow-y:auto;
-      scrollbar-width:none;
-    }
+.container{
+  text-align:center;
+  width:100%;
+  max-width:860px;
+  max-height:95vh;
+  padding:clamp(16px,4vw,24px);
+  overflow-y:auto;
+  scrollbar-width:none;
+}
+.container::-webkit-scrollbar{display:none;}
 
-    .container::-webkit-scrollbar{
-      display:none;
-    }
+h1{
+  font-size:clamp(2rem,6vw,3rem);
+  animation:glow 2.5s ease-in-out infinite alternate;
+}
 
-    h1{
-      font-size:3rem;
-      margin-bottom:10px;
-      animation:glow 2.5s ease-in-out infinite alternate;
-    }
+@keyframes glow{
+  from{text-shadow:0 0 10px #ffb3d9;}
+  to{text-shadow:0 0 30px #ff6fae;}
+}
 
-    @keyframes glow{
-      from{ text-shadow:0 0 10px #fff,0 0 20px #ff005b;}
-      to{ text-shadow:0 0 20px #fff,0 0 40px #ff005b;}
-    }
+.message{
+  font-size:clamp(1rem,3.8vw,1.2rem);
+  margin-top:14px;
+  line-height:1.65;
+  height:0;
+  overflow:hidden;
+  transition:height .35s ease;
+}
 
-    .message{
-      font-size:1.2rem;
-      min-height:120px;
-      margin-top:8px;
-    }
+.btn{
+  margin-top:18px;
+  padding:12px 26px;
+  border-radius:25px;
+  border:none;
+  background:#ff4d6d;
+  color:white;
+  cursor:pointer;
+  font-size:1rem;
+}
 
-    .love-typing{
-      margin-top:18px;
-      font-size:1.2rem;
-      min-height:140px;
-      line-height:1.6;
-    }
+.btn:hover{transform:scale(1.05);}
 
-    .heart{
-      position:fixed;
-      color:#ff5d8f;
-      animation:floatUp 5s linear forwards;
-      opacity:.8;
-    }
+.heart{
+  position:fixed;
+  animation:floatUp 6s linear forwards;
+  opacity:.85;
+  pointer-events:none;
+}
 
-    @keyframes floatUp{
-      0%{ transform:translateY(0) scale(.5);opacity:1;}
-      100%{ transform:translateY(-120vh) scale(1.2);opacity:0;}
-    }
+@keyframes floatUp{
+  0%{
+    transform:translateY(0) scale(.6);
+    bottom:-40px;
+    opacity:0;
+  }
+  10%{opacity:.9;}
+  100%{
+    transform:translateY(-120vh) scale(1.3);
+    opacity:0;
+  }
+}
 
-    .btn{
-      margin-top:15px;
-      padding:10px 22px;
-      border-radius:25px;
-      border:none;
-      background:#ff2d55;
-      color:white;
-      cursor:pointer;
-      font-size:1rem;
-    }
-
-    .btn:hover{
-      transform:scale(1.05);
-    }
-
-    canvas{
-      position:fixed;
-      top:0;
-      left:0;
-      pointer-events:none;
-    }
-  </style>
+img{
+  max-width:100%;
+  height:auto;
+}
+</style>
 </head>
+
 <body>
 
-  <canvas id="fireworks"></canvas>
+<div class="container" id="container">
+  <h1>Happy Anniversary Sonu 💍</h1>
 
-  <div class="container" id="container">
-    <h1>🎆 Happy New Year, My Love ❤️</h1>
-
-    <div class="message" id="msg"></div>
-
-    <button class="btn" id="btn1" onclick="startMessage()">Click here 💗</button>
-
-    <button class="btn" id="btn2" onclick="startLoveTyping()" style="display:none;">
-      Click to see something special 💞
-    </button>
-
-    <div class="love-typing" id="loveBox"></div>
+  <div style="margin-top:12px;">
+    <img
+      src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2NkZ2VmdnVrZGRyeHBkb29vMnFocDY2N24yNWcwZmh6cjNocDIybSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9ZQ/h86PVmFNq6f2l3gMWI/giphy.gif"
+      alt="Love Animation"
+      style="max-width:320px; width:90%; animation:fadeIn 1.6s ease-in-out;"
+    >
   </div>
 
-  <!-- 🎵 working romantic music -->
-  <audio
-    id="bgm"
-    loop
-    preload="auto"
-    playsinline
-    src="https://cdn.pixabay.com/audio/2024/01/13/audio_6b2c41b22c.mp3">
-  </audio>
+  <div class="message" id="msg"></div>
 
-  <script>
-  /* ---------------- MAIN MESSAGE ---------------- */
+  <button class="btn" id="btn" onclick="start()">Our Journey ❤️</button>
+</div>
 
-  const text =
-  " My dearest love,\n\n" +
-  " Thank you for being the most beautiful part of my life.\n" +
-  " Your smile, your voice, your presence — everything feels like magic.\n" +
-  " In this New Year, I only wish to hold your hands more tightly,\n" +
-  " laugh a little louder with you, and love you even deeper.\n\n" +
-  " You are my today, my tomorrow and my forever. 💖\n\n" +
-  " 🎉 Happy New Year, my sweetheart!";
+<audio id="bgm" preload="auto"
+  src="https://orangefreesounds.com/wp-content/uploads/2023/02/Romantic-background-music-intro.mp3">
+</audio>
 
-  const msg=document.getElementById("msg");
-  const container=document.getElementById("container");
+<script>
+const text =
+"My love,\n\n"+
+"Today is not just about a date —\n"+
+"it’s about us and everything we’ve shared.\n\n"+
+"From simple conversations to deep feelings,\n"+
+"from laughter to silence,\n"+
+"every moment with you has shaped my heart.\n\n"+
+"Thank you for standing beside me,\n"+
+"for understanding me,\n"+
+"and for choosing me in your own beautiful way.\n\n"+
+"I don’t know what the future holds,\n"+
+"but I know one thing for sure —\n"+
+"I want every tomorrow with you.\n\n"+
+"Happy Anniversary,\n"+
+"my favorite part of life. ❤️";
 
-  let i=0;
+const container = document.getElementById("container");
+const msg = document.getElementById("msg");
+let i = 0;
 
-  function typeWriter(){
-    if(i < text.length){
-      msg.innerHTML += (text.charAt(i)==="\n") ? "<br>" : text.charAt(i);
-      i++;
+function autoScroll(){
+  container.scrollTo({
+    top: container.scrollHeight,
+    behavior: "smooth"
+  });
+}
 
-      // auto-scroll smoothly
-      container.scrollTo({
-        top: container.scrollHeight,
-        behavior: "smooth"
-      });
+function type(){
+  if(i < text.length){
+    msg.innerHTML += (text[i] === "\n") ? "<br>" : text[i];
+    i++;
+    msg.style.height = msg.scrollHeight + "px";
+    autoScroll();
+    setTimeout(type,45);
+  } else {
+    const loveGif = document.createElement("img");
+    loveGif.src =
+      "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExODFqc3ZwY201b2h4eTNpdG9uam44Ymxjb24wYTZtdnN4emZkYm5rYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/n7K3yEnCdKvIE4w17K/giphy.gif";
+    loveGif.alt = "Sweet Love";
+    loveGif.style.maxWidth = "300px";
+    loveGif.style.width = "85%";
+    loveGif.style.marginTop = "20px";
+    loveGif.style.animation = "fadeIn 1.6s ease-in-out";
 
-      setTimeout(typeWriter,45);
-    } else {
-      document.getElementById("btn2").style.display="inline-block";
-    }
+    container.appendChild(loveGif);
+    setTimeout(autoScroll,700);
   }
+}
 
-  function startMessage(){
-    typeWriter();
-    makeHearts();
-    playMusic();
-    document.getElementById("btn1").style.display="none";
-  }
+function start(){
+  type();
+  makeLove();
+  document.getElementById("bgm").volume = .8;
+  document.getElementById("bgm").play();
+  document.getElementById("btn").style.display = "none";
+}
 
-  /* ---------------- MUSIC on first click ---------------- */
-
-  function playMusic(){
-    const audio=document.getElementById("bgm");
-    audio.volume=.8;
-    audio.play(); // no extra enable button anymore
-  }
-
-  /* ---------------- HEARTS ---------------- */
-
-  function makeHearts(){
-    setInterval(()=>{
-      const heart=document.createElement("div");
-      heart.className="heart";
-      heart.innerHTML="❤️";
-      heart.style.left=Math.random()*window.innerWidth+"px";
-      heart.style.fontSize=20+Math.random()*40+"px";
-      document.body.appendChild(heart);
-      setTimeout(()=>heart.remove(),5000);
-    },400);
-  }
-
-  /* ---------------- 108 LOVE TYPING ---------------- */
-
-  let loveText="";
-  for(let n=1;n<=108;n++){
-    loveText += `${n}. I Love You Sonu 💖\n`;
-  }
-
-  let j=0;
-  function loveTypeWriter(){
-    const loveBox=document.getElementById("loveBox");
-    if(j < loveText.length){
-      loveBox.innerHTML += (loveText.charAt(j)==="\n") ? "<br>" : loveText.charAt(j);
-
-      // auto-scroll continues
-      container.scrollTo({
-        top: container.scrollHeight,
-        behavior:"smooth"
-      });
-
-      j++;
-      setTimeout(loveTypeWriter,25);
-    }
-  }
-
-  function startLoveTyping(){
-    loveTypeWriter();
-    document.getElementById("btn2").style.display="none";
-  }
-
-  /* ---------------- FIREWORKS ---------------- */
-
-  const canvas=document.getElementById("fireworks");
-  const ctx=canvas.getContext("2d");
-
-  function resize(){
-    canvas.width=innerWidth;
-    canvas.height=innerHeight;
-  }
-  resize();
-  addEventListener("resize",resize);
-
-  const fireworks=[];
-
-  function randomColor(){
-    const colors=["#ff004f","#ffdd00","#4dff00","#00e5ff","#ff7af6","#ffa500","#00ffbf"];
-    return colors[Math.floor(Math.random()*colors.length)];
-  }
-
-  function createFirework(){
-    const x=Math.random()*canvas.width;
-    const y=Math.random()*canvas.height/2;
-    const color=randomColor();
-    for(let i=0;i<60;i++){
-      fireworks.push({
-        x,y,
-        angle:Math.random()*Math.PI*2,
-        speed:Math.random()*4+1,
-        life:100,
-        color
-      });
-    }
-  }
-
-  function updateFireworks(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-
-    fireworks.forEach((f,idx)=>{
-      f.x+=Math.cos(f.angle)*f.speed;
-      f.y+=Math.sin(f.angle)*f.speed;
-      f.life--;
-
-      ctx.globalAlpha=f.life/100;
-      ctx.beginPath();
-      ctx.arc(f.x,f.y,2,0,2*Math.PI);
-      ctx.fillStyle=f.color;
-      ctx.fill();
-
-      if(f.life<=0) fireworks.splice(idx,1);
-    });
-
-    if(Math.random()<0.18) createFirework();
-    requestAnimationFrame(updateFireworks);
-  }
-  updateFireworks();
-  </script>
+function makeLove(){
+  const emojis=["❤️","💖","💘","🌹","🌸"];
+  setInterval(()=>{
+    const e=document.createElement("div");
+    e.className="heart";
+    e.innerHTML=emojis[Math.floor(Math.random()*emojis.length)];
+    e.style.left=Math.random()*innerWidth+"px";
+    e.style.bottom="-40px";
+    e.style.fontSize=22+Math.random()*32+"px";
+    document.body.appendChild(e);
+    setTimeout(()=>e.remove(),6000);
+  },350);
+}
+</script>
 
 </body>
 </html>
